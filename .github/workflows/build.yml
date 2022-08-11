@@ -17,9 +17,9 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '11'
-          distribution: 'zulu'
+          distribution: 'adopt'
       - name: Build with Ant
-        run: ant -noinput -buildfile build.xml
+        run: ant -noinput -buildfile build.xml info
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
