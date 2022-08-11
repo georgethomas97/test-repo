@@ -19,7 +19,7 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
       - name: Build with Ant
-        run: ant -p
+        run: ant compile
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
