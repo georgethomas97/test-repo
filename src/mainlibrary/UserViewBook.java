@@ -39,9 +39,9 @@ public class UserViewBook extends javax.swing.JFrame {
         // String Data[][]=null;
         //  String Column[]=null;
         try (Connection Con = DB.getConnection()) {
-            PreparedStatement ps = Con.prepareStatement("select Books.BookID, Books.BookName,Books.Genre,Books.Author,Books.Publisher, Books.Row,Books.Shelf, IssuedBook.UserID from Books left outer join IssuedBook on Books.BookID= IssuedBook.BookID;", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            ResultSet rs = ps.executeQuery();
-
+            try(PreparedStatement ps = Con.prepareStatement("select Books.BookID, Books.BookName,Books.Genre,Books.Author,Books.Publisher, Books.Row,Books.Shelf, IssuedBook.UserID from Books left outer join IssuedBook on Books.BookID= IssuedBook.BookID;", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
+                ResultSet rs = ps.executeQuery();
+            }
             ResultSetMetaData rsmd = rs.getMetaData();
 
             int colnum = rsmd.getColumnCount();
@@ -252,7 +252,7 @@ public class UserViewBook extends javax.swing.JFrame {
 
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
         // TODO add your handling code here:
-        if (SearchField.getText() == "") {
+        if ("".equals(SearchField.getText())) {
             JOptionPane.showMessageDialog(UserViewBook.this, "Search Filed is Empty", "Search Error!", JOptionPane.ERROR_MESSAGE);
         }
 
@@ -279,10 +279,10 @@ public class UserViewBook extends javax.swing.JFrame {
             //  String Column[]=null;
             String Search = "%" + SearchField.getText() + "%";
             try (Connection Con = DB.getConnection()) {
-                PreparedStatement ps = Con.prepareStatement("select A.BookID, A.BookName,A.Genre,A.Author,A.Publisher, A.Row,A.Shelf, IssuedBook.UserID from (select * from Books where BookName like ?) as A left outer join IssuedBook on A.BookID= IssuedBook.BookID", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                ps.setString(1, Search);
-                ResultSet rs = ps.executeQuery();
-
+                try(PreparedStatement ps = Con.prepareStatement("select A.BookID, A.BookName,A.Genre,A.Author,A.Publisher, A.Row,A.Shelf, IssuedBook.UserID from (select * from Books where BookName like ?) as A left outer join IssuedBook on A.BookID= IssuedBook.BookID", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
+                    ps.setString(1, Search);
+                    ResultSet rs = ps.executeQuery();
+                }
                 ResultSetMetaData rsmd = rs.getMetaData();
 
                 int colnum = rsmd.getColumnCount();
@@ -340,10 +340,10 @@ public class UserViewBook extends javax.swing.JFrame {
             //  String Column[]=null;
             String Search = "%" + SearchField.getText() + "%";
             try (Connection Con = DB.getConnection()) {
-                PreparedStatement ps = Con.prepareStatement("select A.BookID, A.BookName,A.Genre,A.Author,A.Publisher, A.Row,A.Shelf, IssuedBook.UserID from (select * from Books where Author like ?) as A left outer join IssuedBook on A.BookID= IssuedBook.BookID", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                ps.setString(1, Search);
-                ResultSet rs = ps.executeQuery();
-
+                try(PreparedStatement ps = Con.prepareStatement("select A.BookID, A.BookName,A.Genre,A.Author,A.Publisher, A.Row,A.Shelf, IssuedBook.UserID from (select * from Books where Author like ?) as A left outer join IssuedBook on A.BookID= IssuedBook.BookID", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
+                    ps.setString(1, Search);
+                    ResultSet rs = ps.executeQuery();
+                }
                 ResultSetMetaData rsmd = rs.getMetaData();
 
                 int colnum = rsmd.getColumnCount();
@@ -444,9 +444,9 @@ public class UserViewBook extends javax.swing.JFrame {
         // String Data[][]=null;
         //  String Column[]=null;
         try (Connection Con = DB.getConnection()) {
-            PreparedStatement ps = Con.prepareStatement("select Books.BookID, Books.BookName,Books.Genre,Books.Author,Books.Publisher, Books.Row,Books.Shelf, IssuedBook.UserID from Books left outer join IssuedBook on Books.BookID= IssuedBook.BookID;", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            ResultSet rs = ps.executeQuery();
-
+            try(PreparedStatement ps = Con.prepareStatement("select Books.BookID, Books.BookName,Books.Genre,Books.Author,Books.Publisher, Books.Row,Books.Shelf, IssuedBook.UserID from Books left outer join IssuedBook on Books.BookID= IssuedBook.BookID;", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
+                ResultSet rs = ps.executeQuery();
+            }
             ResultSetMetaData rsmd = rs.getMetaData();
 
             int colnum = rsmd.getColumnCount();

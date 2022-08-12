@@ -35,9 +35,9 @@ public class AllStudent extends javax.swing.JFrame {
         // String Data[][]=null;
         //  String Column[]=null;
         try (Connection Con = DB.getConnection()) {
-            PreparedStatement ps = Con.prepareStatement("select * from Users", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            ResultSet rs = ps.executeQuery();
-
+            try(PreparedStatement ps = Con.prepareStatement("select * from Users", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
+                ResultSet rs = ps.executeQuery();
+            }
             ResultSetMetaData rsmd = rs.getMetaData();
 
             int colnum = rsmd.getColumnCount();
@@ -249,8 +249,9 @@ public class AllStudent extends javax.swing.JFrame {
             //  String Column[]=null;
             String Search = "%" + SearchField.getText() + "%";
             try (Connection Con = DB.getConnection()) {
-                PreparedStatement ps = Con.prepareStatement("select * from Users where UserName like ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                ps.setString(1, Search);
+                try(PreparedStatement ps = Con.prepareStatement("select * from Users where UserName like ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
+                    ps.setString(1, Search);
+                }
                 ResultSet rs = ps.executeQuery();
 
                 ResultSetMetaData rsmd = rs.getMetaData();
@@ -290,8 +291,9 @@ public class AllStudent extends javax.swing.JFrame {
 
             String Search = "%" + SearchField.getText() + "%";
             try (Connection Con = DB.getConnection()) {
-                PreparedStatement ps = Con.prepareStatement("select * from Users where Email like ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                ps.setString(1, Search);
+                try(PreparedStatement ps = Con.prepareStatement("select * from Users where Email like ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
+                    ps.setString(1, Search);
+                }
                 ResultSet rs = ps.executeQuery();
 
                 ResultSetMetaData rsmd = rs.getMetaData();
@@ -351,9 +353,9 @@ public class AllStudent extends javax.swing.JFrame {
         }
 
         try (Connection Con = DB.getConnection()) {
-            PreparedStatement ps = Con.prepareStatement("select * from Users", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            ResultSet rs = ps.executeQuery();
-
+            try(PreparedStatement ps = Con.prepareStatement("select * from Users", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
+                ResultSet rs = ps.executeQuery();
+            }
             ResultSetMetaData rsmd = rs.getMetaData();
 
             int colnum = rsmd.getColumnCount();

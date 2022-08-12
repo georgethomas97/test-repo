@@ -21,8 +21,9 @@ public class UsersDao {
         try {
             Connection con = DB.getConnection();
             String select = "select * from Users where UserName= '" + name + "' and UserPass='"+ password +"'";
-            Statement selectStatement = con.createStatement();
-            ResultSet rs = selectStatement.executeQuery(select);
+            try(Statement selectStatement = con.createStatement();) {
+                ResultSet rs = selectStatement.executeQuery(select);
+            }
             status = rs.next();
             con.close();
         } catch (Exception e) {
@@ -36,8 +37,9 @@ public class UsersDao {
         try {
             Connection con = DB.getConnection();
             String select = "select * from Users where UserName= '" + UserName +"'";
-            Statement selectStatement = con.createStatement();
-            ResultSet rs = selectStatement.executeQuery(select);
+            try(Statement selectStatement = con.createStatement();) {
+                ResultSet rs = selectStatement.executeQuery(select);
+            }
             status = rs.next();
             con.close();
         } catch (Exception e) {
@@ -54,12 +56,13 @@ public class UsersDao {
         try {
 
             Connection con = DB.getConnection();
-            PreparedStatement ps = con.prepareStatement("insert into Users(UserPass,RegDate,UserName,Email) values(?,?,?,?)");
-            ps.setString(1, UserPass);
-            ps.setString(2, Date);
-            ps.setString(3, User);
-            ps.setString(4, UserEmail);
-            status = ps.executeUpdate();
+            try(PreparedStatement ps = con.prepareStatement("insert into Users(UserPass,RegDate,UserName,Email) values(?,?,?,?)");) {
+                ps.setString(1, UserPass);
+                ps.setString(2, Date);
+                ps.setString(3, User);
+                ps.setString(4, UserEmail);
+                status = ps.executeUpdate();
+            }
             con.close();
         } catch (Exception e) {
             System.out.println(e);

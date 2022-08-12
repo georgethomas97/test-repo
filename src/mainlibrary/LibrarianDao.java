@@ -9,14 +9,15 @@ public class LibrarianDao {
         try {
 
             Connection con = DB.getConnection();
-            PreparedStatement ps = con.prepareStatement("insert into librarian(name,password,email,address,city,contact) values(?,?,?,?,?,?)");
-            ps.setString(1, name);
-            ps.setString(2, password);
-            ps.setString(3, email);
-            ps.setString(4, address);
-            ps.setString(5, city);
-            ps.setString(6, contact);
-            status = ps.executeUpdate();
+            try(PreparedStatement ps = con.prepareStatement("insert into librarian(name,password,email,address,city,contact) values(?,?,?,?,?,?)");) {
+                ps.setString(1, name);
+                ps.setString(2, password);
+                ps.setString(3, email);
+                ps.setString(4, address);
+                ps.setString(5, city);
+                ps.setString(6, contact);
+                status = ps.executeUpdate();
+            }
             con.close();
         } catch (Exception e) {
             System.out.println(e);
@@ -28,9 +29,10 @@ public class LibrarianDao {
         int status = 0;
         try {
             Connection con = DB.getConnection();
-            PreparedStatement ps = con.prepareStatement("delete from Librarian where id=?");
-            ps.setInt(1, id);
-            status = ps.executeUpdate();
+            try(PreparedStatement ps = con.prepareStatement("delete from Librarian where id=?");) {
+                ps.setInt(1, id);
+                status = ps.executeUpdate();
+            }
             con.close();
         } catch (Exception e) {
             System.out.println(e);
@@ -43,9 +45,9 @@ public class LibrarianDao {
         try {
             Connection con = DB.getConnection();
             String select = "select * from Librarian where UserName= '" + name + "' and Password='"+ password +"'";
-            Statement selectStatement = con.createStatement();
-            ResultSet rs = selectStatement.executeQuery(select);
-          
+            try(Statement selectStatement = con.createStatement();) {
+                ResultSet rs = selectStatement.executeQuery(select);
+            }
             status = rs.next();
             con.close();
         } catch (Exception e) {
