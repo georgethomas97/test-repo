@@ -2,8 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0077f357-4390-4399-8f2a-3630dcdd4926" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mainlibrary/AllStudent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mainlibrary/AllStudent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mainlibrary/BookDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mainlibrary/BookDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mainlibrary/LibrarianDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mainlibrary/LibrarianDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/mainlibrary/LibrarianSuccess.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mainlibrary/LibrarianSuccess.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mainlibrary/NewView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mainlibrary/NewView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mainlibrary/TransBookDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mainlibrary/TransBookDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/mainlibrary/UserLoginSuccess.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mainlibrary/UserLoginSuccess.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mainlibrary/UserView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mainlibrary/UserView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mainlibrary/UserViewBook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mainlibrary/UserViewBook.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +39,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1660301084314</updated>
-      <workItem from="1660301085650" duration="5349000" />
+      <workItem from="1660301085650" duration="5978000" />
     </task>
     <servers />
   </component>

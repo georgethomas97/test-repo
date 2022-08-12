@@ -379,11 +379,10 @@ public class LibrarianSuccess extends javax.swing.JFrame {
         try {
             Connection Con;
             Con = DB.getConnection();
-
+            ResultSet rs = null;
             try(PreparedStatement ps = Con.prepareStatement("select * from Librarian where UserName=? and Password=?");){
                 ps.setString(1, User);
                 ps.setString(2, Pass);
-                ResultSet rs;
                 rs = ps.executeQuery();
             }
             boolean status = rs.next();

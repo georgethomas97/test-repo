@@ -45,8 +45,9 @@ public class LibrarianDao {
         try {
             Connection con = DB.getConnection();
             String select = "select * from Librarian where UserName= '" + name + "' and Password='"+ password +"'";
+            ResultSet rs = null;
             try(Statement selectStatement = con.createStatement();) {
-                ResultSet rs = selectStatement.executeQuery(select);
+                rs = selectStatement.executeQuery(select);
             }
             status = rs.next();
             con.close();

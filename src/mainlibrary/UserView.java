@@ -42,9 +42,10 @@ public class UserView extends javax.swing.JFrame {
         // String Data[][]=null;
         //  String Column[]=null;
         try (Connection Con = DB.getConnection()) {
+            ResultSet rs = null;
             try(PreparedStatement ps = Con.prepareStatement("select IssuedBook.BookID,Books.BookName , IssuedBook.IssueDate, IssuedBook.ReturnDate from Books,IssuedBook where Books.BookID=IssuedBook.BookID and IssuedBook.UserID=?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
                 ps.setInt(1, UserIDV);
-                ResultSet rs = ps.executeQuery();
+                rs = ps.executeQuery();
             }
             ResultSetMetaData rsmd = rs.getMetaData();
 

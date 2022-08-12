@@ -21,8 +21,9 @@ public class UsersDao {
         try {
             Connection con = DB.getConnection();
             String select = "select * from Users where UserName= '" + name + "' and UserPass='"+ password +"'";
+            ResultSet rs = null;
             try(Statement selectStatement = con.createStatement();) {
-                ResultSet rs = selectStatement.executeQuery(select);
+                rs = selectStatement.executeQuery(select);
             }
             status = rs.next();
             con.close();
@@ -37,8 +38,9 @@ public class UsersDao {
         try {
             Connection con = DB.getConnection();
             String select = "select * from Users where UserName= '" + UserName +"'";
+            ResultSet rs = null;
             try(Statement selectStatement = con.createStatement();) {
-                ResultSet rs = selectStatement.executeQuery(select);
+                rs = selectStatement.executeQuery(select);
             }
             status = rs.next();
             con.close();
