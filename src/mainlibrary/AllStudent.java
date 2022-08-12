@@ -35,23 +35,21 @@ public class AllStudent extends javax.swing.JFrame {
         // String Data[][]=null;
         //  String Column[]=null;
         try (Connection Con = DB.getConnection()) {
-            ResultSet rs = null;
-            try(PreparedStatement ps = Con.prepareStatement("select * from Users", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
-                rs = ps.executeQuery();
-            }
-            ResultSetMetaData rsmd = rs.getMetaData();
+            try(PreparedStatement ps = Con.prepareStatement("select UserID, '********' as UserPass,RegDate,UserName,Email from Users", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
+                ResultSet rs = ps.executeQuery();
+                ResultSetMetaData rsmd = rs.getMetaData();
 
-            int colnum = rsmd.getColumnCount();
+                int colnum = rsmd.getColumnCount();
 
-            String Row[];
-            Row = new String[colnum];
-            while (rs.next()) {
-                for (int i = 1; i <= colnum; i++) {
-                    Row[i - 1] = rs.getString(i);
+                String Row[];
+                Row = new String[colnum];
+                while (rs.next()) {
+                    for (int i = 1; i <= colnum; i++) {
+                        Row[i - 1] = rs.getString(i);
+                    }
+                    model.addRow(Row);
                 }
-                model.addRow(Row);
             }
-
             Con.close();
         } catch (Exception e) {
             e.printStackTrace(System.out);
@@ -249,41 +247,39 @@ public class AllStudent extends javax.swing.JFrame {
             // String Data[][]=null;
             //  String Column[]=null;
             String Search = "%" + SearchField.getText() + "%";
-            ResultSet rs = null;
             try (Connection Con = DB.getConnection()) {
-                try(PreparedStatement ps = Con.prepareStatement("select * from Users where UserName like ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
+                try(PreparedStatement ps = Con.prepareStatement("select UserID, '*********' as UserPass,RegDate,UserName,Email from Users where UserName like ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
                     ps.setString(1, Search);
-                    rs = ps.executeQuery();
-                }
-                ResultSetMetaData rsmd = rs.getMetaData();
+                    ResultSet rs = ps.executeQuery();
+                    ResultSetMetaData rsmd = rs.getMetaData();
 
-                int colnum = rsmd.getColumnCount();
+                    int colnum = rsmd.getColumnCount();
 
-                //code here
-                String Row[];
-                Row = new String[colnum];
-                while (rs.next()) {
-                    for (int i = 1; i <= colnum; i++) {
-                        Row[i - 1] = rs.getString(i);
+                    //code here
+                    String Row[];
+                    Row = new String[colnum];
+                    while (rs.next()) {
+                        for (int i = 1; i <= colnum; i++) {
+                            Row[i - 1] = rs.getString(i);
+                        }
+                        model.addRow(Row);
                     }
-                    model.addRow(Row);
-                }
-                int rowcount = model.getRowCount();
-                System.out.println(rowcount);
-                if (rowcount == 0) {
-                    String NoRow[];
-                    NoRow = new String[7];
-                    NoRow[1] = "NO";
-                    NoRow[2] = "RESULT";
-                    NoRow[0] = "";
-                    NoRow[3] = "";
-                    NoRow[4] = "";
-                    NoRow[5] = "";
-                    NoRow[6] = "";
-                    model.addRow(NoRow);
+                    int rowcount = model.getRowCount();
+                    System.out.println(rowcount);
+                    if (rowcount == 0) {
+                        String NoRow[];
+                        NoRow = new String[7];
+                        NoRow[1] = "NO";
+                        NoRow[2] = "RESULT";
+                        NoRow[0] = "";
+                        NoRow[3] = "";
+                        NoRow[4] = "";
+                        NoRow[5] = "";
+                        NoRow[6] = "";
+                        model.addRow(NoRow);
 
+                    }
                 }
-
                 Con.close();
             } catch (Exception e) {
                 System.out.println(e);
@@ -291,39 +287,38 @@ public class AllStudent extends javax.swing.JFrame {
         } else if (AuthorRadio.isSelected()) {
 
             String Search = "%" + SearchField.getText() + "%";
-            ResultSet rs = null;
             try (Connection Con = DB.getConnection()) {
-                try(PreparedStatement ps = Con.prepareStatement("select * from Users where Email like ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
+                try(PreparedStatement ps = Con.prepareStatement("select UserID, '*********' as UserPass,RegDate,UserName,Email from Users where Email like ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
                     ps.setString(1, Search);
-                    rs = ps.executeQuery();
-                }
-                ResultSetMetaData rsmd = rs.getMetaData();
+                    ResultSet rs = ps.executeQuery();
+                    ResultSetMetaData rsmd = rs.getMetaData();
 
-                int colnum = rsmd.getColumnCount();
+                    int colnum = rsmd.getColumnCount();
 
-                //code here
-                String Row[];
-                Row = new String[colnum];
-                while (rs.next()) {
-                    for (int i = 1; i <= colnum; i++) {
-                        Row[i - 1] = rs.getString(i);
+                    //code here
+                    String Row[];
+                    Row = new String[colnum];
+                    while (rs.next()) {
+                        for (int i = 1; i <= colnum; i++) {
+                            Row[i - 1] = rs.getString(i);
+                        }
+                        model.addRow(Row);
                     }
-                    model.addRow(Row);
-                }
-                int rowcount = model.getRowCount();
-                System.out.println(rowcount);
-                if (rowcount == 0) {
-                    String NoRow[];
-                    NoRow = new String[7];
-                    NoRow[1] = "NO";
-                    NoRow[2] = "RESULT";
-                    NoRow[0] = "";
-                    NoRow[3] = "";
-                    NoRow[4] = "";
-                    NoRow[5] = "";
-                    NoRow[6] = "";
-                    model.addRow(NoRow);
+                    int rowcount = model.getRowCount();
+                    System.out.println(rowcount);
+                    if (rowcount == 0) {
+                        String NoRow[];
+                        NoRow = new String[7];
+                        NoRow[1] = "NO";
+                        NoRow[2] = "RESULT";
+                        NoRow[0] = "";
+                        NoRow[3] = "";
+                        NoRow[4] = "";
+                        NoRow[5] = "";
+                        NoRow[6] = "";
+                        model.addRow(NoRow);
 
+                    }
                 }
                 Con.close();
             } catch (Exception e) {
@@ -354,23 +349,22 @@ public class AllStudent extends javax.swing.JFrame {
         }
 
         try (Connection Con = DB.getConnection()) {
-            ResultSet rs = null;
-            try(PreparedStatement ps = Con.prepareStatement("select * from Users", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
-                rs = ps.executeQuery();
-            }
-            ResultSetMetaData rsmd = rs.getMetaData();
 
-            int colnum = rsmd.getColumnCount();
+            try(PreparedStatement ps = Con.prepareStatement("select UserID, '********' as UserPass,RegDate,UserName,Email from Users", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
+                ResultSet rs = ps.executeQuery();
+                ResultSetMetaData rsmd = rs.getMetaData();
 
-            String Row[];
-            Row = new String[colnum];
-            while (rs.next()) {
-                for (int i = 1; i <= colnum; i++) {
-                    Row[i - 1] = rs.getString(i);
+                int colnum = rsmd.getColumnCount();
+
+                String Row[];
+                Row = new String[colnum];
+                while (rs.next()) {
+                    for (int i = 1; i <= colnum; i++) {
+                        Row[i - 1] = rs.getString(i);
+                    }
+                    model.addRow(Row);
                 }
-                model.addRow(Row);
             }
-
             Con.close();
         } catch (Exception e) {
             System.out.println(e);

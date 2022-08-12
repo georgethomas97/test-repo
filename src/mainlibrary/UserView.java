@@ -42,14 +42,12 @@ public class UserView extends javax.swing.JFrame {
         // String Data[][]=null;
         //  String Column[]=null;
         try (Connection Con = DB.getConnection()) {
-            ResultSet rs = null;
             try(PreparedStatement ps = Con.prepareStatement("select IssuedBook.BookID,Books.BookName , IssuedBook.IssueDate, IssuedBook.ReturnDate from Books,IssuedBook where Books.BookID=IssuedBook.BookID and IssuedBook.UserID=?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
                 ps.setInt(1, UserIDV);
-                rs = ps.executeQuery();
-            }
-            ResultSetMetaData rsmd = rs.getMetaData();
+                ResultSet rs = ps.executeQuery();
+                ResultSetMetaData rsmd = rs.getMetaData();
 
-            int colnum = rsmd.getColumnCount();
+                int colnum = rsmd.getColumnCount();
 
             /*   Column = new String[colnum];
             for(int i=1;i<=colnum;i++){
@@ -63,13 +61,14 @@ public class UserView extends javax.swing.JFrame {
             String[][] data = new String[rows][colnum];
             
             int count=0; */
-            String Row[];
-            Row = new String[colnum];
-            while (rs.next()) {
-                for (int i = 1; i <= colnum; i++) {
-                    Row[i - 1] = rs.getString(i);
+                String Row[];
+                Row = new String[colnum];
+                while (rs.next()) {
+                    for (int i = 1; i <= colnum; i++) {
+                        Row[i - 1] = rs.getString(i);
+                    }
+                    model.addRow(Row);
                 }
-                model.addRow(Row);
             }
 
             //count++;

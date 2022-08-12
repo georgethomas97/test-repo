@@ -20,12 +20,13 @@ public class UsersDao {
         boolean status = false;
         try {
             Connection con = DB.getConnection();
-            String select = "select * from Users where UserName= '" + name + "' and UserPass='"+ password +"'";
-            ResultSet rs = null;
-            try(Statement selectStatement = con.createStatement();) {
-                rs = selectStatement.executeQuery(select);
+            String select = "select * from Users where UserName=? and UserPass=?";
+            try(PreparedStatement ps = con.prepareStatement(select);) {
+                ps.setString(1,name);
+                ps.setString(2,password);
+                ResultSet rs = ps.executeQuery();
+                status = rs.next();
             }
-            status = rs.next();
             con.close();
         } catch (Exception e) {
             System.out.println(e);
@@ -37,12 +38,31 @@ public class UsersDao {
         boolean status = false;
         try {
             Connection con = DB.getConnection();
-            String select = "select * from Users where UserName= '" + UserName +"'";
-            ResultSet rs = null;
-            try(Statement selectStatement = con.createStatement();) {
-                rs = selectStatement.executeQuery(select);
+            String select = "select * from Users where UserName=?";
+            try(PreparedStatement ps = con.prepareStatement(select);) {
+                ps.setString(1,UserName);
+                ResultSet rs = ps.executeQuery();
+                status = rs.next();
             }
-            status = rs.next();
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+
+    }
+
+    public static boolean CheckIfAlreadyEmail(String email) {
+        boolean status = false;
+        try {
+            Connection con = DB.getConnection();
+            String select = "select * from Users where Email=?";
+
+            try(PreparedStatement ps = con.prepareStatement(select);) {
+                ps.setString(1,email);
+                ResultSet rs = ps.executeQuery();
+                status = rs.next();
+            }
             con.close();
         } catch (Exception e) {
             System.out.println(e);

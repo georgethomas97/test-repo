@@ -31,12 +31,11 @@ public static int save(String callno,String name,String author,String publisher,
 {
     boolean status = false;
     try(Connection con = DB.getConnection()) {
-        ResultSet rs = null;
         try(PreparedStatement ps = con.prepareStatement("select * from Publisher where PublisherName = ?");) {
             ps.setString(1, Publisher);
-            rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
+            status = rs.next();
         }
-        status=rs.next();
         con.close();
     }catch(Exception e){System.out.println(e);}
     return status;

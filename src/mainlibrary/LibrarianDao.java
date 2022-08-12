@@ -44,12 +44,13 @@ public class LibrarianDao {
         boolean status = false;
         try {
             Connection con = DB.getConnection();
-            String select = "select * from Librarian where UserName= '" + name + "' and Password='"+ password +"'";
-            ResultSet rs = null;
-            try(Statement selectStatement = con.createStatement();) {
-                rs = selectStatement.executeQuery(select);
+            String select = "select * from Librarian where UserName=? and Password=?";
+            try(PreparedStatement ps = con.prepareStatement(select);) {
+                ps.setString(1,name);
+                ps.setString(2,password);
+                ResultSet rs = ps.executeQuery();
+                status = rs.next();
             }
-            status = rs.next();
             con.close();
         } catch (Exception e) {
             System.out.println(e);

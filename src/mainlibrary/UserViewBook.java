@@ -39,13 +39,11 @@ public class UserViewBook extends javax.swing.JFrame {
         // String Data[][]=null;
         //  String Column[]=null;
         try (Connection Con = DB.getConnection()) {
-            ResultSet rs = null;
             try(PreparedStatement ps = Con.prepareStatement("select Books.BookID, Books.BookName,Books.Genre,Books.Author,Books.Publisher, Books.Row,Books.Shelf, IssuedBook.UserID from Books left outer join IssuedBook on Books.BookID= IssuedBook.BookID;", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
-                rs = ps.executeQuery();
-            }
-            ResultSetMetaData rsmd = rs.getMetaData();
+                ResultSet rs = ps.executeQuery();
+                ResultSetMetaData rsmd = rs.getMetaData();
 
-            int colnum = rsmd.getColumnCount();
+                int colnum = rsmd.getColumnCount();
 
             /*   Column = new String[colnum];
             for(int i=1;i<=colnum;i++){
@@ -59,27 +57,27 @@ public class UserViewBook extends javax.swing.JFrame {
             String[][] data = new String[rows][colnum];
             
             int count=0; */
-            String Row[];
-            String Check = "";
-            Row = new String[colnum];
-            while (rs.next()) {
-                for (int i = 1; i <= colnum; i++) {
-                    if (i == colnum) {
-                        if (rs.getString(i) == null) {
-                            Row[i - 1] = "Not Issued";
+                String Row[];
+                String Check = "";
+                Row = new String[colnum];
+                while (rs.next()) {
+                    for (int i = 1; i <= colnum; i++) {
+                        if (i == colnum) {
+                            if (rs.getString(i) == null) {
+                                Row[i - 1] = "Not Issued";
+                            } else {
+                                Row[i - 1] = "Issued";
+                            }
+                            System.out.println(rs.getString(i));
                         } else {
-                            Row[i - 1] = "Issued";
+                            Row[i - 1] = rs.getString(i);
                         }
-                        System.out.println(rs.getString(i));
-                    } else {
-                        Row[i - 1] = rs.getString(i);
+
                     }
+                    model.addRow(Row);
 
                 }
-                model.addRow(Row);
-
             }
-
             //count++;
             Con.close();
         } catch (Exception e) {
@@ -280,57 +278,55 @@ public class UserViewBook extends javax.swing.JFrame {
             //  String Column[]=null;
             String Search = "%" + SearchField.getText() + "%";
             try (Connection Con = DB.getConnection()) {
-                ResultSet rs = null;
                 try(PreparedStatement ps = Con.prepareStatement("select A.BookID, A.BookName,A.Genre,A.Author,A.Publisher, A.Row,A.Shelf, IssuedBook.UserID from (select * from Books where BookName like ?) as A left outer join IssuedBook on A.BookID= IssuedBook.BookID", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
                     ps.setString(1, Search);
-                    rs = ps.executeQuery();
-                }
-                ResultSetMetaData rsmd = rs.getMetaData();
+                    ResultSet rs = ps.executeQuery();
+                    ResultSetMetaData rsmd = rs.getMetaData();
 
-                int colnum = rsmd.getColumnCount();
+                    int colnum = rsmd.getColumnCount();
 
-                //code here
-                String Row[];
-                Row = new String[colnum];
-                while (rs.next()) {
-                    for (int i = 1; i <= colnum; i++) {
-                        if (i == colnum) {
-                            if (rs.getString(i) == null) {
-                                Row[i - 1] = "Not Issued";
-                                model.addRow(Row);
-                            } else {
-                                if (flag == 1) {
-                                    continue;
+                    //code here
+                    String Row[];
+                    Row = new String[colnum];
+                    while (rs.next()) {
+                        for (int i = 1; i <= colnum; i++) {
+                            if (i == colnum) {
+                                if (rs.getString(i) == null) {
+                                    Row[i - 1] = "Not Issued";
+                                    model.addRow(Row);
+                                } else {
+                                    if (flag == 1) {
+                                        continue;
+                                    }
+                                    Row[i - 1] = "Issued";
+                                    model.addRow(Row);
+
                                 }
-                                Row[i - 1] = "Issued";
-                                model.addRow(Row);
 
+                                System.out.println(rs.getString(i));
+                            } else {
+                                Row[i - 1] = rs.getString(i);
                             }
 
-                            System.out.println(rs.getString(i));
-                        } else {
-                            Row[i - 1] = rs.getString(i);
                         }
 
                     }
+                    int rowcount = model.getRowCount();
+                    System.out.println(rowcount);
+                    if (rowcount == 0) {
+                        String NoRow[];
+                        NoRow = new String[7];
+                        NoRow[3] = "NO";
+                        NoRow[4] = "RESULT";
+                        NoRow[0] = "";
+                        NoRow[1] = "";
+                        NoRow[2] = "";
+                        NoRow[5] = "";
+                        NoRow[6] = "";
+                        model.addRow(NoRow);
 
+                    }
                 }
-                int rowcount = model.getRowCount();
-                System.out.println(rowcount);
-                if (rowcount == 0) {
-                    String NoRow[];
-                    NoRow = new String[7];
-                    NoRow[3] = "NO";
-                    NoRow[4] = "RESULT";
-                    NoRow[0] = "";
-                    NoRow[1] = "";
-                    NoRow[2] = "";
-                    NoRow[5] = "";
-                    NoRow[6] = "";
-                    model.addRow(NoRow);
-
-                }
-
                 //count++;
                 Con.close();
             } catch (Exception e) {
@@ -342,54 +338,52 @@ public class UserViewBook extends javax.swing.JFrame {
             //  String Column[]=null;
             String Search = "%" + SearchField.getText() + "%";
             try (Connection Con = DB.getConnection()) {
-                ResultSet rs = null;
                 try(PreparedStatement ps = Con.prepareStatement("select A.BookID, A.BookName,A.Genre,A.Author,A.Publisher, A.Row,A.Shelf, IssuedBook.UserID from (select * from Books where Author like ?) as A left outer join IssuedBook on A.BookID= IssuedBook.BookID", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
                     ps.setString(1, Search);
-                    rs = ps.executeQuery();
-                }
-                ResultSetMetaData rsmd = rs.getMetaData();
+                    ResultSet rs = ps.executeQuery();
+                    ResultSetMetaData rsmd = rs.getMetaData();
 
-                int colnum = rsmd.getColumnCount();
+                    int colnum = rsmd.getColumnCount();
 
-                //code here
-                String Row[];
-                Row = new String[colnum];
-                while (rs.next()) {
-                    for (int i = 1; i <= colnum; i++) {
-                        if (i == colnum) {
-                            if (rs.getString(i) == null) {
-                                Row[i - 1] = "Not Issued";
-                                model.addRow(Row);
-                            } else {
-                                if (flag == 1) {
-                                    continue;
+                    //code here
+                    String Row[];
+                    Row = new String[colnum];
+                    while (rs.next()) {
+                        for (int i = 1; i <= colnum; i++) {
+                            if (i == colnum) {
+                                if (rs.getString(i) == null) {
+                                    Row[i - 1] = "Not Issued";
+                                    model.addRow(Row);
+                                } else {
+                                    if (flag == 1) {
+                                        continue;
+                                    }
+                                    Row[i - 1] = "Issued";
+                                    model.addRow(Row);
                                 }
-                                Row[i - 1] = "Issued";
-                                model.addRow(Row);
+                                System.out.println(rs.getString(i));
+                            } else {
+                                Row[i - 1] = rs.getString(i);
                             }
-                            System.out.println(rs.getString(i));
-                        } else {
-                            Row[i - 1] = rs.getString(i);
                         }
+
                     }
+                    int rowcount = model.getRowCount();
+                    System.out.println(rowcount);
+                    if (rowcount == 0) {
+                        String NoRow[];
+                        NoRow = new String[7];
+                        NoRow[3] = "NO";
+                        NoRow[4] = "RESULT";
+                        NoRow[0] = "";
+                        NoRow[1] = "";
+                        NoRow[2] = "";
+                        NoRow[5] = "";
+                        NoRow[6] = "";
+                        model.addRow(NoRow);
 
+                    }
                 }
-                int rowcount = model.getRowCount();
-                System.out.println(rowcount);
-                if (rowcount == 0) {
-                    String NoRow[];
-                    NoRow = new String[7];
-                    NoRow[3] = "NO";
-                    NoRow[4] = "RESULT";
-                    NoRow[0] = "";
-                    NoRow[1] = "";
-                    NoRow[2] = "";
-                    NoRow[5] = "";
-                    NoRow[6] = "";
-                    model.addRow(NoRow);
-
-                }
-
                 //count++;
                 Con.close();
             } catch (Exception e) {
@@ -447,13 +441,11 @@ public class UserViewBook extends javax.swing.JFrame {
         // String Data[][]=null;
         //  String Column[]=null;
         try (Connection Con = DB.getConnection()) {
-            ResultSet rs = null;
             try(PreparedStatement ps = Con.prepareStatement("select Books.BookID, Books.BookName,Books.Genre,Books.Author,Books.Publisher, Books.Row,Books.Shelf, IssuedBook.UserID from Books left outer join IssuedBook on Books.BookID= IssuedBook.BookID;", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
-                rs = ps.executeQuery();
-            }
-            ResultSetMetaData rsmd = rs.getMetaData();
+                ResultSet rs = ps.executeQuery();
+                ResultSetMetaData rsmd = rs.getMetaData();
 
-            int colnum = rsmd.getColumnCount();
+                int colnum = rsmd.getColumnCount();
 
             /*   Column = new String[colnum];
             for(int i=1;i<=colnum;i++){
@@ -467,29 +459,30 @@ public class UserViewBook extends javax.swing.JFrame {
             String[][] data = new String[rows][colnum];
             
             int count=0; */
-            String Row[];
-            String Check = "";
-            Row = new String[colnum];
-            while (rs.next()) {
-                for (int i = 1; i <= colnum; i++) {
-                    if (i == colnum) {
-                        if (rs.getString(i) == null) {
-                            Row[i - 1] = "Not Issued";
-                            model.addRow(Row);
-                        } else {
-                            if (flag == 1) {
-                                continue;
+                String Row[];
+                String Check = "";
+                Row = new String[colnum];
+                while (rs.next()) {
+                    for (int i = 1; i <= colnum; i++) {
+                        if (i == colnum) {
+                            if (rs.getString(i) == null) {
+                                Row[i - 1] = "Not Issued";
+                                model.addRow(Row);
+                            } else {
+                                if (flag == 1) {
+                                    continue;
+                                }
+                                Row[i - 1] = "Issued";
+                                model.addRow(Row);
                             }
-                            Row[i - 1] = "Issued";
-                            model.addRow(Row);
+                            System.out.println(rs.getString(i));
+                        } else {
+                            Row[i - 1] = rs.getString(i);
                         }
-                        System.out.println(rs.getString(i));
-                    } else {
-                        Row[i - 1] = rs.getString(i);
+
                     }
 
                 }
-
             }
 
             //count++;

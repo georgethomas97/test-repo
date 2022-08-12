@@ -39,13 +39,11 @@ public class NewView extends javax.swing.JFrame {
         // String Data[][]=null;
         //  String Column[]=null;
         try (Connection Con = DB.getConnection()) {
-            ResultSet rs = null;
             try(PreparedStatement ps = Con.prepareStatement("select IssuedBook.BookID,IssuedBook.UserID,Books.BookName , IssuedBook.IssueDate, IssuedBook.ReturnDate from Books,IssuedBook where Books.BookID=IssuedBook.BookID;", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
-                rs = ps.executeQuery();
-            }
-            ResultSetMetaData rsmd = rs.getMetaData();
+                ResultSet rs = ps.executeQuery();
+                ResultSetMetaData rsmd = rs.getMetaData();
 
-            int colnum = rsmd.getColumnCount();
+                int colnum = rsmd.getColumnCount();
 
             /*   Column = new String[colnum];
             for(int i=1;i<=colnum;i++){
@@ -59,15 +57,15 @@ public class NewView extends javax.swing.JFrame {
             String[][] data = new String[rows][colnum];
             
             int count=0; */
-            String Row[];
-            Row = new String[colnum];
-            while (rs.next()) {
-                for (int i = 1; i <= colnum; i++) {
-                    Row[i - 1] = rs.getString(i);
+                String Row[];
+                Row = new String[colnum];
+                while (rs.next()) {
+                    for (int i = 1; i <= colnum; i++) {
+                        Row[i - 1] = rs.getString(i);
+                    }
+                    model.addRow(Row);
                 }
-                model.addRow(Row);
             }
-
             //count++;
             Con.close();
         } catch (Exception e) {
@@ -253,41 +251,39 @@ public class NewView extends javax.swing.JFrame {
             //  String Column[]=null;
             String Search = "%" + SearchField.getText() + "%";
             try (Connection Con = DB.getConnection()) {
-                ResultSet rs = null;
                 try(PreparedStatement ps = Con.prepareStatement("select IssuedBook.BookID,IssuedBook.UserID,Books.BookName , IssuedBook.IssueDate, IssuedBook.ReturnDate from Books,IssuedBook where Books.BookID=IssuedBook.BookID and Books.BookName like ?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
                     ps.setString(1, Search);
-                    rs = ps.executeQuery();
-                }
+                    ResultSet rs = ps.executeQuery();
 
-                ResultSetMetaData rsmd = rs.getMetaData();
+                    ResultSetMetaData rsmd = rs.getMetaData();
 
-                int colnum = rsmd.getColumnCount();
+                    int colnum = rsmd.getColumnCount();
 
-                //code here
-                String Row[];
-                Row = new String[colnum];
-                while (rs.next()) {
-                    for (int i = 1; i <= colnum; i++) {
-                        Row[i - 1] = rs.getString(i);
+                    //code here
+                    String Row[];
+                    Row = new String[colnum];
+                    while (rs.next()) {
+                        for (int i = 1; i <= colnum; i++) {
+                            Row[i - 1] = rs.getString(i);
+                        }
+                        model.addRow(Row);
                     }
-                    model.addRow(Row);
-                }
-                int rowcount = model.getRowCount();
-                System.out.println(rowcount);
-                if (rowcount == 0) {
-                    String NoRow[];
-                    NoRow = new String[7];
-                    NoRow[1] = "NO";
-                    NoRow[2] = "RESULT";
-                    NoRow[0] = "";
-                    NoRow[3] = "";
-                    NoRow[4] = "";
-                    NoRow[5] = "";
-                    NoRow[6] = "";
-                    model.addRow(NoRow);
+                    int rowcount = model.getRowCount();
+                    System.out.println(rowcount);
+                    if (rowcount == 0) {
+                        String NoRow[];
+                        NoRow = new String[7];
+                        NoRow[1] = "NO";
+                        NoRow[2] = "RESULT";
+                        NoRow[0] = "";
+                        NoRow[3] = "";
+                        NoRow[4] = "";
+                        NoRow[5] = "";
+                        NoRow[6] = "";
+                        model.addRow(NoRow);
 
+                    }
                 }
-
                 //count++;
                 Con.close();
             } catch (Exception e) {
@@ -301,40 +297,38 @@ public class NewView extends javax.swing.JFrame {
             int BookIDV;
             BookIDV = Integer.parseInt(Search);
             try (Connection Con = DB.getConnection()) {
-                ResultSet rs = null;
                 try(PreparedStatement ps = Con.prepareStatement("select IssuedBook.BookID,IssuedBook.UserID,Books.BookName , IssuedBook.IssueDate, IssuedBook.ReturnDate from Books,IssuedBook where Books.BookID=IssuedBook.BookID and IssuedBook.BookID=?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
                     ps.setInt(1, BookIDV);
-                    rs = ps.executeQuery();
-                }
-                ResultSetMetaData rsmd = rs.getMetaData();
+                    ResultSet rs = ps.executeQuery();
+                    ResultSetMetaData rsmd = rs.getMetaData();
 
-                int colnum = rsmd.getColumnCount();
+                    int colnum = rsmd.getColumnCount();
 
-                //code here
-                String Row[];
-                Row = new String[colnum];
-                while (rs.next()) {
-                    for (int i = 1; i <= colnum; i++) {
-                        Row[i - 1] = rs.getString(i);
+                    //code here
+                    String Row[];
+                    Row = new String[colnum];
+                    while (rs.next()) {
+                        for (int i = 1; i <= colnum; i++) {
+                            Row[i - 1] = rs.getString(i);
+                        }
+                        model.addRow(Row);
                     }
-                    model.addRow(Row);
-                }
-                int rowcount = model.getRowCount();
-                System.out.println(rowcount);
-                if (rowcount == 0) {
-                    String NoRow[];
-                    NoRow = new String[7];
-                    NoRow[1] = "NO";
-                    NoRow[2] = "RESULT";
-                    NoRow[0] = "";
-                    NoRow[3] = "";
-                    NoRow[4] = "";
-                    NoRow[5] = "";
-                    NoRow[6] = "";
-                    model.addRow(NoRow);
+                    int rowcount = model.getRowCount();
+                    System.out.println(rowcount);
+                    if (rowcount == 0) {
+                        String NoRow[];
+                        NoRow = new String[7];
+                        NoRow[1] = "NO";
+                        NoRow[2] = "RESULT";
+                        NoRow[0] = "";
+                        NoRow[3] = "";
+                        NoRow[4] = "";
+                        NoRow[5] = "";
+                        NoRow[6] = "";
+                        model.addRow(NoRow);
 
+                    }
                 }
-
                 //count++;
                 Con.close();
             } catch (Exception e) {
@@ -348,40 +342,38 @@ public class NewView extends javax.swing.JFrame {
             int UserIDV;
             UserIDV = Integer.parseInt(Search);
             try (Connection Con = DB.getConnection()) {
-                ResultSet rs = null;
                 try(PreparedStatement ps = Con.prepareStatement("select IssuedBook.BookID,IssuedBook.UserID,Books.BookName , IssuedBook.IssueDate, IssuedBook.ReturnDate from Books,IssuedBook where Books.BookID=IssuedBook.BookID and IssuedBook.UserID=?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
                     ps.setInt(1, UserIDV);
-                    rs = ps.executeQuery();
-                }
-                ResultSetMetaData rsmd = rs.getMetaData();
+                    ResultSet rs = ps.executeQuery();
+                    ResultSetMetaData rsmd = rs.getMetaData();
 
-                int colnum = rsmd.getColumnCount();
+                    int colnum = rsmd.getColumnCount();
 
-                //code here
-                String Row[];
-                Row = new String[colnum];
-                while (rs.next()) {
-                    for (int i = 1; i <= colnum; i++) {
-                        Row[i - 1] = rs.getString(i);
+                    //code here
+                    String Row[];
+                    Row = new String[colnum];
+                    while (rs.next()) {
+                        for (int i = 1; i <= colnum; i++) {
+                            Row[i - 1] = rs.getString(i);
+                        }
+                        model.addRow(Row);
                     }
-                    model.addRow(Row);
-                }
-                int rowcount = model.getRowCount();
-                System.out.println(rowcount);
-                if (rowcount == 0) {
-                    String NoRow[];
-                    NoRow = new String[7];
-                    NoRow[1] = "NO";
-                    NoRow[2] = "RESULT";
-                    NoRow[0] = "";
-                    NoRow[3] = "";
-                    NoRow[4] = "";
-                    NoRow[5] = "";
-                    NoRow[6] = "";
-                    model.addRow(NoRow);
+                    int rowcount = model.getRowCount();
+                    System.out.println(rowcount);
+                    if (rowcount == 0) {
+                        String NoRow[];
+                        NoRow = new String[7];
+                        NoRow[1] = "NO";
+                        NoRow[2] = "RESULT";
+                        NoRow[0] = "";
+                        NoRow[3] = "";
+                        NoRow[4] = "";
+                        NoRow[5] = "";
+                        NoRow[6] = "";
+                        model.addRow(NoRow);
 
+                    }
                 }
-
                 //count++;
                 Con.close();
             } catch (Exception e) {
@@ -417,13 +409,11 @@ public class NewView extends javax.swing.JFrame {
             model.removeRow(model.getRowCount() - 1);
         }
         try (Connection Con = DB.getConnection()) {
-            ResultSet rs = null;
             try(PreparedStatement ps = Con.prepareStatement("select IssuedBook.BookID,IssuedBook.UserID,Books.BookName , IssuedBook.IssueDate, IssuedBook.ReturnDate from Books,IssuedBook where Books.BookID=IssuedBook.BookID;", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);) {
-                rs = ps.executeQuery();
-            }
-            ResultSetMetaData rsmd = rs.getMetaData();
+                ResultSet rs = ps.executeQuery();
+                ResultSetMetaData rsmd = rs.getMetaData();
 
-            int colnum = rsmd.getColumnCount();
+                int colnum = rsmd.getColumnCount();
 
             /*   Column = new String[colnum];
             for(int i=1;i<=colnum;i++){
@@ -437,15 +427,15 @@ public class NewView extends javax.swing.JFrame {
             String[][] data = new String[rows][colnum];
             
             int count=0; */
-            String Row[];
-            Row = new String[colnum];
-            while (rs.next()) {
-                for (int i = 1; i <= colnum; i++) {
-                    Row[i - 1] = rs.getString(i);
+                String Row[];
+                Row = new String[colnum];
+                while (rs.next()) {
+                    for (int i = 1; i <= colnum; i++) {
+                        Row[i - 1] = rs.getString(i);
+                    }
+                    model.addRow(Row);
                 }
-                model.addRow(Row);
             }
-
             //count++;
             Con.close();
         } catch (Exception e) {
