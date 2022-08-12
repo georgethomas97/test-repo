@@ -254,8 +254,8 @@ public class UserLoginSuccess extends javax.swing.JFrame {
         try {
             Connection Con;
             Con = DB.getConnection();
-            PreparedStatement ps;
-            try(ps = Con.prepareStatement("select * from Users where UserName=? and UserPass=?");){
+
+            try(PreparedStatement ps = Con.prepareStatement("select * from Users where UserName=? and UserPass=?");){
                 ps.setString(1, User);
                 ps.setString(2, Pass);
                 ResultSet rs;
